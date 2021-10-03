@@ -19,7 +19,9 @@
             </div>
             <div class="col-2 info d-flex flex-column align-items-center">
               <div class="lastestDate">
-                {{ getMessage(item).time.split('T')[0].split('-')[1] }}/{{ getMessage(item).time.split('T')[0].split('-')[2] }}
+                {{
+                  getMessage(item).time.split('T')[0].split('-')[1]
+                }}/{{ getMessage(item).time.split('T')[0].split('-')[2] }}
               </div>
               <div class="uncheck" v-if="item.memberId == item.landlord.id && item.memberOneStatus != 0">
                 {{ item.memberOneStatus }}
@@ -45,7 +47,9 @@
             </div>
             <div class="col-2 info d-flex flex-column align-items-center">
               <div class="lastestDate">
-                {{ getMessage(item).time.split('T')[0].split('-')[1] }}/{{ getMessage(item).time.split('T')[0].split('-')[2] }}
+                {{
+                  getMessage(item).time.split('T')[0].split('-')[1]
+                }}/{{ getMessage(item).time.split('T')[0].split('-')[2] }}
               </div>
               <div class="uncheck" v-if="item.memberId == item.landlord.id && item.memberOneStatus != 0">
                 {{ item.memberOneStatus }}
@@ -107,9 +111,11 @@ import * as signalR from '@microsoft/signalr';
 import moment from 'moment';
 import settingJson from "@/components/Settings/setting";
 
-let hubUrl = "/chatHub";
-const connection = new signalR.HubConnectionBuilder().withAutomaticReconnect().withUrl(hubUrl).build();
-connection.start().catch(err => console.log(err));
+let hubUrl = "http://airelax.azurewebsites.net/chathub";
+const connection = new signalR.HubConnectionBuilder().withUrl(hubUrl, {
+  skipNegotiation: true,
+  transport: signalR.HttpTransportType.WebSockets
+}).build();
 
 export default {
   components: {Talk, Signal},
@@ -131,9 +137,16 @@ export default {
   },
   mounted() {
     var vm = this;
-    vm.$store.state.connection = connection;
-    vm.startUp();
-    vm.detectStatus();
+    console.log("10-03 20:10")
+    console.log(connection)
+    console.log("get Start")
+    connection.start().then(() => {
+      console.log("get Into Start")
+      console.log(connection)
+      vm.$store.state.connection = connection;
+      vm.startUp();
+      vm.detectStatus();
+    }).catch(err => console.log(err));
   },
   updated() {
     this.scrollToBottom();
@@ -185,6 +198,7 @@ export default {
               connection.invoke("AddAllGroup", x.connectString);
             })
             vm.get = true;
+            console.log(vm.messages)
           });
 
       connection.on("ReceiveMessage", function (objString, message) {
