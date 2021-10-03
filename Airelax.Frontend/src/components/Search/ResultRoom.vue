@@ -12,7 +12,7 @@
         <Heart
             class="d-md-none .heart"
             data-bs-target="#wish"
-            v-bind:data-bs-toggle="checkIfInWishList(room.id)?'123':'offcanvas'"
+            data-bs-toggle="offcanvas"
             aria-controls="offcanvasBottom"
             @click="updateWishList(room.id)"
             style="
@@ -24,7 +24,10 @@
           "
             :class="{
             wishHeart: wishLists
-              ? checkIfInWishList(room.id)
+              ? wishLists
+                  .flatMap((x) => x.houses)
+                  .flatMap((x) => x)
+                  .includes(room.id)
               : false,
           }"
         ></Heart>
@@ -72,7 +75,7 @@
           <!--Todo 與愛心獨立事件有關的地方-->
           <Heart
               class="d-none d-md-block .heart"
-              v-bind:data-bs-toggle="checkIfInWishList(room.id)?'no':'modal'"
+              data-bs-toggle="modal"
               data-bs-target="#mdWish"
               @click="updateWishList(room.id)"
               style="
@@ -86,7 +89,10 @@
             "
               :class="{
               wishHeart: wishLists
-                ? checkIfInWishList(room.id)
+                ? wishLists
+                    .flatMap((x) => x.houses)
+                    .flatMap((x) => x)
+                    .includes(room.id)
                 : false,
             }"
           ></Heart>
@@ -195,6 +201,9 @@ export default {
 
     Heart,
   },
+  created() {
+    console.log(this.wishLists);
+  },
   data() {
     return {
       priceDetail: null,
@@ -239,16 +248,10 @@ export default {
       if (typeof price == undefined) return 0;
       return Number(price);
     },
+
     updateWishList(houseId) {
       this.$store.state.selectedWishHouseId = houseId;
-      if(this.checkIfInWishList(houseId)) this.$emit('updateWishList');
     },
-    checkIfInWishList(roomId) {
-      return this.wishLists
-          .flatMap((x) => x.houses)
-          .flatMap((x) => x)
-          .includes(roomId)
-    }
   },
 };
 </script>

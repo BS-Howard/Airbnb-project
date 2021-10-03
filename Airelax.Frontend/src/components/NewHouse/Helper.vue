@@ -101,12 +101,9 @@ export default {
     leaveOut() {
       if (this.$route.params.id) {
         axios(`/api/new-house/${this.$route.params.id}`, {method: 'delete'})
-            .then(() => window.location.href = '/managehouse/all').catch(err => {
-          console.log(err);
-          // window.location.href = '/managehouse/all';
-        });
+            .then(() => window.location.href = '/member/all').catch(err => console.log(err));
       } else {
-        window.location.href = '/managehouse/all';
+        window.location.href = '/member/all';
       }
     }
   }

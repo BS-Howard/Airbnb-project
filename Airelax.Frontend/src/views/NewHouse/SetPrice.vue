@@ -19,6 +19,7 @@ export default {
       this.$store.commit('setNewHouseNextAvailable', false);
       return;
     }
+    //todo fetch house
     this.$store.commit('setNewHouseNextAvailable', true);
   },
   components: {
@@ -36,13 +37,12 @@ export default {
       const req = {
         method: houseId ? "PUT" : "POST",
         url: houseId ? `/${houseId}/price` : "",
-        redirectName: `/manageHouse/all`,
+        redirectName: `/`,
         body: {
           price: price,
         }
       }
       this.$store.commit('setNewHouseRequest', req);
-      this.$store.commit('setNewHouseNextAvailable', true);
     }
   }
 };

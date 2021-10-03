@@ -70,7 +70,7 @@ export default {
       const req = {
         method: "PUT",
         url: `/${houseId}/facilities`,
-        redirectName: `HousePhotos`,
+        redirectName: `HousePrice`,
         body: {
           ProvideFacilities: facilities,
         }

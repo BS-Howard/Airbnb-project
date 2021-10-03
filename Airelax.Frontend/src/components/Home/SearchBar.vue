@@ -80,7 +80,12 @@
           <ul>
             <li><span>隨時隨地出發</span></li>
             <li>
-              <router-link :to="freeGo()">
+              <router-link :to="{
+              path: '/search',
+              query: {
+              location: $store.state.destination,
+              },
+              }">
                 <div class="everywhere">
                   <p>隨心所欲</p>
                   <i class="fas fa-home"></i>
@@ -161,15 +166,6 @@ export default {
   },
   inject: ["reload"],
   methods: {
-    freeGo() {
-      this.$store.state.destination = '台北';
-      return {
-        path: '/search',
-        query: {
-          location: this.$store.state.destination,
-        },
-      }
-    },
     HideBody() {
       if (this.$store.state.fullWidth < 768)
         this.$store.state.isBodyShow = false;

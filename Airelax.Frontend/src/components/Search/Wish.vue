@@ -110,6 +110,11 @@
 <script>
 import axios from "axios";
 export default {
+  data() {
+    return {
+      IsAdd: true,
+    };
+  },
   methods: {
     send: function (wishId) {
       const dataUrl = `/api/wishLists/Houses`;
@@ -123,13 +128,14 @@ export default {
         data: {
           HouseId: this.$store.state.selectedWishHouseId,
           WishId: wishId,
+          IsAdd: this.IsAdd,
         },
       })
-        .then(function () {
+        .then(function () { //Todo 與愛心獨立事件有關的地方
           vm.$emit(
             "onWishListUpdated",
             wishId,
-            vm.$store.state.selectedWishHouseId,
+            vm.$store.state.selectedWishHouseId
           );
         })
         .catch((err) => console.log(err));

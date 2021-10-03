@@ -1,7 +1,7 @@
 <template>
   <div class="col-12 col-md-6 col-xl-4" v-for="i in wishList" :key="i">
     <div class="car">
-      <div class="imageContainer"><img :src="i.photo" alt="Photo" /></div>
+      <img :src="i.photo" alt="Photo" />
       <div class="content">
         <div class="starContainer">
           <Star></Star>&nbsp;4.5&nbsp;
@@ -36,14 +36,9 @@ export default {
 .car {
   padding: 8px 0 12px;
 }
-.imageContainer {
-  overflow: hidden;
-  border-radius: 12px;
-  max-width: 522px;
-}
 .car img {
   width: 100%;
-  max-width: 522px;
+  border-radius: 12px;
 }
 .car .content .starContainer {
   font-size: 15px;
@@ -66,9 +61,6 @@ export default {
   display: none;
 }
 @media screen and (min-width: 768px) {
-  .imageContainer {
-    max-height: 232px;
-  }
   .row .col-12.col-md-6.col-xl-4:nth-child(odd) .car {
     padding-right: 12px;
   }

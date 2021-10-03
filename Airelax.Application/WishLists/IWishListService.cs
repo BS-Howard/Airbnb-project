@@ -7,11 +7,11 @@ namespace Airelax.Application.WishLists
 {
     public interface IWishListService
     {
-        int CreateWishList(CreateWishListInput input);
+        void CreateWishList(CreateWishListInput input);
         void DeleteWishList(int wishId);
         IEnumerable<WishListViewModel> GetWishLists();
         void UpdateWishName(UpdateWishListInput input);
-        bool ReviseHouse(UpdateWishListInput input);
+        void ReviseHouse(UpdateWishListInput input);
         Task<IEnumerable<WishListHousesViewModel>> GetHousesByWishList(int wishId);
     }
 }
